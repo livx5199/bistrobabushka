@@ -36,10 +36,11 @@
         const header = document.querySelector("dom:first-child");
         const h1 = document.querySelector("header h1");
         const h2 = document.querySelector("h2:nth-child(1)");
-        const h3 = document.querySelectorAll("h3:nth-child(1)");
+        const h3 = document.querySelector("article:nth-child(1) h3");
         const article = document.querySelectorAll("article:nth-child(1)");
         const images = document.querySelectorAll("img:nth-child(2)");
         const footer = document.querySelector("footer:nth-child(3)");
+        const article1Content = document.querySelector("article:nth-child(1) p");
         console.log(h1)
         console.log(h2)
         console.log(h3)
@@ -47,6 +48,9 @@
         console.log(images)
         console.log(footer)
 
+        h1.textContent = "Hello";
+        h3.textContent = "Der står noget nyt her";
+        article1Content.textContent ="Noget helt nyt tekst";
     </script>
 
 </body>
