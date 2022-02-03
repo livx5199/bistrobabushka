@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        article:nth-child(2) {
+            color:red;
+        }
+
+        img:nth-child(2){
+            border-radius: 5px;
+        }
+
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <header><h1>Titel</h1></header>
+    <main>
+        <h2>Undertitel</h2>
+        <section>
+            <article><h3>Article 1</h3>
+            <img src="./placeimg_640_480_arch(1).jpg" alt="billede1">
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt placeat omnis facere sint reprehenderit recusandae eos minus impedit, beatae non dignissimos voluptatibus. Voluptate sint itaque fuga reiciendis doloremque saepe adipisci doloribus, optio sit ipsa quam eius accusamus, at non maiores? Exercitationem illo architecto, maiores sint accusantium labore adipisci veniam est recusandae necessitatibus nemo delectus omnis similique voluptatum doloribus provident iste laborum ipsa magnam odit eligendi esse ad commodi. Debitis veniam dolorem fuga quidem minus quas facere reprehenderit deserunt, accusantium natus maiores eum, unde, alias repellat ut commodi numquam voluptatem iste voluptate. Nihil consequuntur necessitatibus, natus distinctio asperiores aspernatur quisquam saepe.</p></article>
+            <article><h3>Article 2</h3>
+            <img src="./placeimg_640_480_arch.jpg" alt="billede2">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente quibusdam minima, magni animi omnis corrupti natus commodi vel! Quaerat eos quis asperiores modi dicta tenetur nostrum dignissimos neque enim. Esse eius non eveniet aperiam laudantium nihil consectetur consequatur? Vel maiores nisi excepturi dicta fugiat suscipit at repellat aut quo? Dolorem iste beatae quidem eaque nam distinctio odio, dolores ex impedit architecto? Minus provident aliquid, ipsa laudantium dignissimos, quaerat earum cumque natus accusantium pariatur eius, harum vero quia. Quis, neque ipsam commodi, non facere sed excepturi facilis pariatur praesentium saepe reprehenderit tempora labore aspernatur repudiandae sint numquam possimus. Eum, animi impedit.</p></article>
+        </section>
+
+        <footer>This is the footer</footer>
+    </main>
+    <script>
+        const header = document.querySelector("dom:first-child");
+        const h1 = document.querySelector("header h1");
+        const h2 = document.querySelector("h2:nth-child(1)");
+        const h3 = document.querySelector("article:nth-child(1) h3");
+        const article = document.querySelectorAll("article:nth-child(1)");
+        const images = document.querySelector("article img");
+        const footer = document.querySelector("footer:nth-child(3)");
+        console.log(h1)
+        console.log(h2)
+        console.log(h3)
+        console.log(article)
+        console.log(images)
+        console.log(footer)
+
+        const articleSection = document.querySelector("section");
+        const title = document.querySelector("header h1");
+        const article1 = document.querySelector("article:nth-child(1)");
+        const img1 = document.querySelector("article:nth-child(1) img");
+        const article1Heading = document.querySelector("article:nth-child(1) h3");
+        const article1Content = document.querySelector("article:nth-child(1) p");
+
+        document.addEventListener("DOMContentLoaded", sidenVises);
+
+        function sidenVises(){
+            console.log("sidenVises");
+
+        h1.textContent = "Billeder";
+        h3.textContent = "Arkitektur";
+        article1Content.textContent = "Bygninger skaber rum";
+        images.src = "placeimg_640_480_arch.jpg";
+        images.alt = "Caprice 30 - Maude";
+
+        let newArticle = document.createElement("article");
+        let newH3 = document.createElement("h3");
+        let newHeadlineText = document.createTextNode("Mennesker");
+        newH3.appendChild(newHeadlineText);
+        let newPic = document.createElement("images");
+        newPic.src = "placeimg_640_480_arch.jpg";
+        let newContent = document.createElement("p");
+        newContent.textContent = "Her står der noget om mennesker";
+        newArticle.appendChild(newPic);
+        newArticle.appendChild(newH3);
+        newArticle.appendChild(newContent);
+        articleSection.appendChild(newArticle);
+
+        images.addEventListener("click", skiftBillede);
+        }
+
+        
+
+        function skiftBillede(){
+            let tilfædigtTal = Math.round(Math.random() * 10);
+            console.log("skiftBillede");
+            images.src = "https://placeimg.com/400/300/arch?t=" + tilfædigtTal;
+        }
+
+    </script>
+
+</body>
+</html>
