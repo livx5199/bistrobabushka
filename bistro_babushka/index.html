@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <section class="background">
+            <div id="babush">
+                <img src="./SVG/bistro1.svg" alt="img">
+            </div>
+        </section>
+        <style>
+            * {
+                margin: 0;
+            }
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: cover;
+            }
+
+            body {
+                /* background-color: whitesmoke; */
+                background-color: #ffffff;
+                background-color: #fefefe;
+                background-image: url("data:image/svg+xml,%3Csvg width='12' height='16' viewBox='0 0 12 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 .99C4 .445 4.444 0 5 0c.552 0 1 .45 1 .99v4.02C6 5.555 5.556 6 5 6c-.552 0-1-.45-1-.99V.99zm6 8c0-.546.444-.99 1-.99.552 0 1 .45 1 .99v4.02c0 .546-.444.99-1 .99-.552 0-1-.45-1-.99V8.99z' fill='%2329235c' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+
+            main {
+                padding: 2%;
+                max-height: 100%;
+                gap: 10px;
+            }
+
+            h1 {
+                padding: 2%;
+                color: white;
+                background-color: #29235C;
+            }
+
+            h2,
+            p {
+                padding-left: 1%;
+
+            }
+
+            article:nth-child(odd) {
+                color: #29235C;
+                background-color: white;
+                border: solid 1px;
+                border-color: #29235C;
+            }
+
+            article:nth-child(even) {
+                color: #29235C;
+                background-color: white;
+                border: solid 1px;
+                border-color: #29235C;
+            }
+
+
+            @media screen and (min-width:600px) {
+
+                main {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                }
+            }
+
+
+            nav {
+                display: flex;
+                justify-content: center;
+                padding: 10px;
+                background-color: #2C4B9B;
+            }
+
+
+
+            .filter {
+                display: flex;
+                justify-content: center;
+                background-color: #2C4B9B;
+                color: whitesmoke;
+                border-radius: 5px;
+                text-align: right;
+                border: none;
+                padding: 1%;
+                margin: 4px;
+            }
+
+
+            .filter:hover {
+                background-color: #5269a3;
+            }
+
+            .valgt {
+                background-color: #5269a3;
+            }
+
+            h1 {
+                display: flex;
+                justify-content: center;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            h3 {
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 2%;
+            }
+
+            p {
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 2%;
+
+            }
+
+
+            .indhold {
+                width: 70vw;
+                min-height: 50vh;
+                background: #fff;
+                margin: 4rem auto;
+                padding: 10px;
+            }
+
+            .luk {
+                position: fixed;
+                right: 0;
+                font-size: 2rem;
+            }
+
+            .background {
+                display: flex;
+                justify-content: center;
+                padding-top: 3%;
+                height: 25vw;
+                background-color: #b4bff5;
+            }
+
+            footer {
+                background: rgba(123, 123, 123, 0.53);
+            }
+
+            #babush {
+                width: 60%;
+            }
+        </style>
+    </header>
+
+    <body>
+
+        <nav>
+            <button class="filter valgt" data-kategori="alle">Alle</button>
+            <button class="filter" data-kategori="forretter">Forretter</button>
+            <button class="filter" data-kategori="hovedretter">Hovedretter</button>
+            <button class="filter" data-kategori="desserter">Desserter</button>
+            <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
+
+        </nav>
+
+        <h1>Alle retter</h1>
+
+        <main></main>
+        <template>
+            <article class="grid">
+                <div class="image"><img src="" alt=""></div>
+
+                <h3></h3>
+                <p class="kort"></p>
+                <p class="pris">Pris: </p>
+
+
+
+            </article>
+        </template>
+
+
+
+        <script>
+
+            document.addEventListener("DOMContentLoaded", hentData);
+
+            const url = "https://babushka-dd8a.restdb.io/rest/menu";
+            const options = {
+                headers: {
+                    'x-apikey': "600ec2fb1346a1524ff12de4"
+                }
+            }
+
+            const beholder = document.querySelector("main");
+            const template = document.querySelector("template");
+
+
+            let filter = "alle";
+            let retter;
+
+
+            async function hentData() {
+                const respons = await fetch(url, options);
+                retter = await respons.json();
+                console.log(retter);
+                visJson(retter);
+                addEventListenersToButtons();
+
+                const filterKnapper = document.querySelectorAll("nav button");
+                filterKnapper.forEach(knap => knap.addEventListener("click", filtrerRetter));
+            }
+
+
+            function visJson(ret) {
+                const retter = ret;
+                beholder.textContent = "";
+                retter.forEach(madret => {
+                    if (filter == madret.kategori || filter == "alle") {
+                        const klon = template.cloneNode(true).content;
+                        klon.querySelector("h3").textContent = madret.navn;
+                        console.log(madret.navn);
+                        klon.querySelector(".kort").textContent = madret.kortbeskrivelse;
+                        klon.querySelector("img").src = "medium/" + madret.billednavn + "-md.jpg";
+                        klon.querySelector(".pris").textContent = madret.pris + " kr";
+                        klon.querySelector(".grid").addEventListener("click", () => visDetaljer(madret));
+                        beholder.appendChild(klon);
+                    }
+                })
+
+            }
+
+            hentData(url);
+
+
+
+            function addEventListenersToButtons() {
+                document.querySelectorAll(".filter").forEach(elm => {
+                    elm.addEventListener("click", filtrering);
+                })
+            }
+            function filtrering() {
+                filter = this.dataset.kategori;
+                document.querySelector("h1").textContent = this.textContent;
+                document.querySelectorAll(".filter").forEach(elm => {
+                    elm.classList.remove("valgt");
+                })
+                this.classList.add("valgt");
+                visJson();
+            }
+
+            function filtrerRetter() {
+                filter = this.dataset.kategori;
+
+                visJson(retter);
+            }
+
+            function visDetaljer(madret) {
+                location.href = `detalje.html?id=${madret._id}`;
+            }
+
+
+
+        </script>
+    </body>
+
+</html>
